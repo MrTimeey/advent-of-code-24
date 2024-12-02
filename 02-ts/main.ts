@@ -6,6 +6,6 @@ const readFileLines = (filename: string): string[] =>
 
 const inputLines = readFileLines('./src/input.txt')
 
-console.log('XX.12.2023')
+console.log('02.12.2023')
 console.log(`Part 1: ${pt1(inputLines)}`)
 console.log(`Part 2: ${pt2(inputLines)}`)
