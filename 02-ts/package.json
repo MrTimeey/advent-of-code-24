@@ -6,9 +6,7 @@
   "scripts": {
     "dev": "nodemon main.ts",
     "serve": "ts-node main.ts",
-    "test": "vitest",
-    "lint": "eslint **/*.ts",
-    "lint:fix": "eslint --fix **/*.ts"
+    "test": "vitest"
   },
   "author": "",
   "license": "MIT",
