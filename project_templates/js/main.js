@@ -10,6 +10,8 @@ const readFileLines = (filename) => readFileSync(filename)
 
 const inputData = readFileLines('./src/input.txt')
 
-console.log('01.12.2024')
-console.log(`Part 1: ${pt1(inputData)}`)
-console.log(`Part 2: ${pt2(inputData)}`)
+console.log('.12.2024')
+const startP1 = Date.now()
+console.log(`Part 1: ${pt1(inputData)} - Duration: ${Date.now() - startP1}`)
+const startP2 = Date.now()
+console.log(`Part 2: ${pt2(inputData)} - Duration: ${Date.now() - startP2}`)
