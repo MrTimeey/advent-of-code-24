@@ -3,12 +3,12 @@ const decreasing = (curr: number, i: number, arr: number []) => i === 0 || curr 
 
 const linear = (curr: number, i: number, arr: number []) => {
   if (i === 0) return true
-  const diff = Math.max(curr, arr[i-1]) - Math.min(curr, arr[i-1])
+  const diff = Math.abs(curr - arr[i-1])
   return diff <= 3 && diff >= 1
 }
 
 const isSafe = (level: number[]) => {
-  const orderFn = level[0] > level[level.length -1] ? decreasing : increasing
+  const orderFn = level[0] > level[level.length - 1] ? decreasing : increasing
   return level.every(orderFn) && level.every(linear)
 }
 
