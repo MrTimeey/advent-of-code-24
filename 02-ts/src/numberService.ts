@@ -12,8 +12,10 @@ const isSafe = (level: number[]) => {
 }
 
 export const pt1 = (inputLines: string[]): number => {
-  const levels = inputLines.map(line => line.split(' ').map(c => +c))
-  return levels.filter(isSafe).length
+  return inputLines
+      .map(line => line.split(' ').map(c => +c))
+      .filter(isSafe)
+      .length
 }
 
 export const pt2 = (inputLines: string[]): number => {
