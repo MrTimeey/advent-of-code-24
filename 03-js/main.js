@@ -1,5 +1,5 @@
 import { readFileSync } from 'fs'
-import { pt1, pt2 } from './src/abcService.js'
+import { pt1, pt2 } from './src/mulService.js'
 
 const readFileLines = (filename) => readFileSync(filename)
     .toString('utf-8')
