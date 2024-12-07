@@ -1,75 +1,47 @@
 const parseInput = (line: string) => {
-  const [result, numbers] = line.split(':')
-  const expectedResult = +(result.trim())
-  const inputNumbers = numbers.split(' ').map(n => +n)
-  return [expectedResult, inputNumbers]
-}
+  const [result, numbers] = line.split(':');
+  const expectedResult = +(result.trim());
+  const inputNumbers = numbers.split(' ').map(n => +n);
+  return [expectedResult, inputNumbers];
+};
 
-const permutate = (numbers: number [], operators = ["+", "*"]): string[] => {
-  const result: string[] = [];
+const resolve = (numbers: number[], index: number, currentValue: number, expectedResult: number, useCombination = false): boolean => {
+  if (index === numbers.length) {
+    return currentValue === expectedResult;
+  }
 
-  const resolve = (i: number, current: string) => {
-    if (i === numbers.length) {
-      result.push(current);
-      return;
-    }
-    for (const operator of operators) {
-      resolve(i + 1, current + operator + numbers[i]);
+  if (resolve(numbers, index + 1, currentValue + numbers[index], expectedResult, useCombination)) {
+    return true;
+  }
+
+  if (resolve(numbers, index + 1, currentValue * numbers[index], expectedResult, useCombination)) {
+    return true;
+  }
+
+  if (useCombination) {
+    const combinedValue = parseInt(`${currentValue}${numbers[index]}`);
+    if (resolve(numbers, index + 1, combinedValue, expectedResult, useCombination)) {
+      return true;
     }
   }
-  resolve(1, `${numbers[0]}`)
-  return result
-}
-
-function evaluateExpression(calculation: string) {
-  const tokens = ('+' + calculation).split(/(?=[+*])/);
-  let result = 0;
-  for (const token of tokens) {
-    if (token.startsWith('*')) {
-      result += +(token.slice(1))
-    } else if(token.includes('+')) {
-      result *= +(token.slice(1))
-    }
-  }
-  return result;
-}
+  return false;
+};
 
 export const pt1 = (inputLines: string[]): number => {
   return inputLines
       .map(parseInput)
-      .map(input => {
-        const [expectedResult, numbers] = input
-        return [expectedResult, permutate(numbers as number[])]
+      .filter(([expectedResult, numbers]) => {
+        return resolve(numbers as number[], 1, (numbers as number[])[0], expectedResult as number);
       })
-      .filter(input => {
-        const [expectedResult, calculations] = input
-        for (const calculation of (calculations as string[])) {
-          if (expectedResult === evaluateExpression(calculation)) {
-            return true
-          }
-        }
-        return false
-      })
-      .reduce((acc, val) => acc + (val[0] as number), 0);
-}
+      .reduce((acc, [expectedResult]) => acc + (expectedResult as number), 0);
+};
 
 export const pt2 = (inputLines: string[]): number => {
   return inputLines
       .map(parseInput)
-      .map(input => {
-        const [expectedResult, numbers] = input
-        return [expectedResult, permutate(numbers as number[], ['+', '*', '|'])]
+      .filter(([expectedResult, numbers]) => {
+        return resolve(numbers as number[], 1, (numbers as number[])[0], expectedResult as number, true);
       })
-      .filter(input => {
-        const [expectedResult, calculations] = input
-        for (const calculation of (calculations as string[])) {
+      .reduce((acc, [expectedResult]) => acc + (expectedResult as number), 0);
 
-          if (expectedResult === evaluateExpression(calculation.replaceAll('|', ''))) {
-            return true
-          }
-        }
-        return false
-      })
-      .reduce((acc, val) => acc + (val[0] as number), 0);
-
-}
+};
