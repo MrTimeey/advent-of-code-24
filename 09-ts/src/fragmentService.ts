@@ -38,28 +38,55 @@ export const pt1 = (input: string): number => {
       .reduce((acc, val) => acc + val, 0)
 }
 
-function getComplexInput(input: string) {
-  const expandedInput = expandInput(input)
-  const mappedInput = []
-  let current: string[] = []
-  for (const elem of expandedInput) {
-    if (elem === '.') {
-      if (current.some(s => s !== '.')) {
-        mappedInput.push(current)
-        current = []
-      }
-    } else {
-      if (current.some(s => s !== elem)) {
-        mappedInput.push(current)
-        current = []
-      }
-    }
-    current.push(elem)
-  }
-  mappedInput.push(current)
-  return mappedInput;
-}
-
 export const pt2 = (input: string): number => {
-  return 0
+  let expansion = expandInput(input);
+
+  const possibleFiles = []
+  let current: number[] = []
+  const backlog = expansion.slice().reverse()
+      .filter(s => s !== '.')
+      .map(s => +s);
+  for (const number of backlog) {
+    if (current.length === 0 ) {
+      current.push(number)
+    } else if(current.some(n => n === number)) {
+      current.push(number)
+    } else {
+      possibleFiles.push(current)
+      current = []
+      current.push(number)
+    }
+  }
+  possibleFiles.push(current)
+
+
+  for (const possibleFile of possibleFiles) {
+    let currentStart = null;
+    let currentLength = 0;
+    for (let i = 0; i < expansion.length; i++) {
+      if (expansion[i] === '.') {
+        if (currentStart === null) {
+          currentStart = i;
+        }
+        currentLength++;
+      } else if(expansion[i] === `${possibleFile[0]}`) {
+        break;
+      } else {
+          if (currentLength > 0 && currentStart !== null) {
+            if (possibleFile.length <= currentLength) {
+              expansion = expansion.map(s => s === `${possibleFile[0]}` ? '.' : s)
+              expansion.splice(currentStart, possibleFile.length, ...(possibleFile.map(n => `${n}`)));
+              break
+            }
+            currentStart = null;
+            currentLength = 0;
+          }
+        }
+      }
+
+  }
+
+  return expansion
+      .map((n, i) => n !== '.' ? +n * i : 0)
+      .reduce((acc, val) => acc + val, 0)
 }
