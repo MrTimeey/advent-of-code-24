@@ -11,3 +11,7 @@ test('Test input part 2', () => {
   expect(pt2(input)).toBe(2858)
 })
 
+test('Edge case part 2', () => {
+  expect(pt2('354631466260')).toBe(1325)
+})
+

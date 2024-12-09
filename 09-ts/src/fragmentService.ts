@@ -57,8 +57,6 @@ export const pt2 = (input: string): number => {
       current.push(number)
     }
   }
-  possibleFiles.push(current)
-
 
   for (const possibleFile of possibleFiles) {
     let currentStart = null;
@@ -69,11 +67,9 @@ export const pt2 = (input: string): number => {
           currentStart = i;
         }
         currentLength++;
-      } else if(expansion[i] === `${possibleFile[0]}`) {
-        break;
       } else {
           if (currentLength > 0 && currentStart !== null) {
-            if (possibleFile.length <= currentLength) {
+            if (possibleFile.length <= currentLength && currentStart <= expansion.findIndex( value => value === possibleFile[0] + '')) {
               expansion = expansion.map(s => s === `${possibleFile[0]}` ? '.' : s)
               expansion.splice(currentStart, possibleFile.length, ...(possibleFile.map(n => `${n}`)));
               break
@@ -83,7 +79,6 @@ export const pt2 = (input: string): number => {
           }
         }
       }
-
   }
 
   return expansion
