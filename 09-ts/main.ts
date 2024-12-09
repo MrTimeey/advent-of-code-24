@@ -12,4 +12,3 @@ console.log(`Part 1: ${pt1(input)} - Duration: ${Date.now() - startP1}`)
 const startP2 = Date.now()
 let number = pt2(input);
 console.log(`Part 2: ${number} - Duration: ${Date.now() - startP2}`)
-if (number === 6398097037768) console.error('Falsch')
