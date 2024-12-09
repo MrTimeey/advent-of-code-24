@@ -10,39 +10,33 @@ const oppositeDir = (dir) => {
   return [x > 0 ? -Math.abs(x) : Math.abs(x), y > 0 ? -Math.abs(y) : Math.abs(y)]
 }
 
-export const pt1 = (inputLines) => {
-  const grid = inputLines.map(l => [...l]);
-  const outOfBounds = (x,y) => {
-    console.log('Check bounds for ', x, y, x >= grid.length || y >= grid[0].length)
-    return x < 0 || y < 0 || x >= grid.length || y >= grid[0].length
-  }
-  const antinodes = new Set;
-
+const getAntennas = (grid) => {
+  const result = {}
   for (let row = 0; row < grid.length; row++) {
     for (let col = 0; col < grid[0].length; col++) {
       const element = grid[row][col]
       if (element === '.') continue
-      console.log(`Check for ${element} on x ${row}|${col}`)
-      for (const dir of Object.values(direction)) {
-        let otherElement = '', x = row, y = col
-        while (!outOfBounds(x,y) && element !== otherElement) {
-         x += dir[0]
-         y += dir[1]
-          if (outOfBounds(x,y)) break
-         otherElement = grid?.[x]?.[y]
-         if (element && element === otherElement) {
-           const distance = Math.max(row, x) - Math.min(row, x)
-           console.log('Found matching antenna', distance)
-           const oDir = oppositeDir(dir)
-           const firstAntinode = [x + dir[0] * distance, y + dir[1] * distance]
-           if (inBounds(firstAntinode[0], firstAntinode[1])){
-             antinodes.add(`${firstAntinode[0]}|${firstAntinode[1]}`)
-           }
-           const secondAntinode = [row + oDir[0] * distance, y + oDir[1] * distance]
-           if (inBounds(secondAntinode[0], secondAntinode[1])){
-             antinodes.add(`${secondAntinode[0]}|${secondAntinode[1]}`)
-           }
-         }
+      result[element] = [...result?.[element] ?? [], [row, col]]
+    }
+  }
+  return result
+}
+
+export const pt1 = (inputLines) => {
+  const grid = inputLines.map(l => [...l]);
+  const antennas = getAntennas(grid)
+
+  const antinodes = new Set;
+  for (const coords of Object.values(antennas)) {
+    if (coords.length < 2) continue
+    for (const baseAntenna of coords) {
+      for (const partnerAntenna of coords) {
+        if (baseAntenna === partnerAntenna) continue
+        const x = partnerAntenna[0] - (baseAntenna[0] - partnerAntenna[0]);
+        const y = partnerAntenna[1] - (baseAntenna[1] - partnerAntenna[1]);
+
+        if(x >= 0 && x < grid[0].length && y >= 0 && y < grid.length) {
+          antinodes.add(`${x}|${y}`);
         }
       }
     }
@@ -51,5 +45,29 @@ export const pt1 = (inputLines) => {
 }
 
 export const pt2 = (inputLines) => {
-  return 0
+  const grid = inputLines.map(l => [...l]);
+  const antennas = getAntennas(grid)
+
+  const antinodes = new Set;
+  for (const coords of Object.values(antennas)) {
+    if (coords.length < 2) continue
+    for (const baseAntenna of coords) {
+      for (const partnerAntenna of coords) {
+        if (baseAntenna === partnerAntenna) continue
+
+        const distX = baseAntenna[0] - partnerAntenna[0];
+        const distY = baseAntenna[1] - partnerAntenna[1];
+
+        let x = partnerAntenna[0];
+        let y = partnerAntenna[1];
+
+        while(x >= 0 && x < grid[0].length && y >= 0 && y < grid.length) {
+          antinodes.add(`${x}|${y}`);
+          x += distX
+          y += distY
+        }
+      }
+    }
+  }
+  return antinodes.size
 }

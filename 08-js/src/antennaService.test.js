@@ -18,7 +18,6 @@ test('Simple part 1', () => {
   expect(pt1(input)).toBe(2)
 })
 
-/*
 test('three parts part 1', () => {
   const input = [
   '..........',
@@ -55,8 +54,7 @@ test('complex overlapping part 1', () => {
   expect(pt1(input)).toBe(14)
 })
 
-
-test('Test input part 1', () => {
+test('Test input part 2', () => {
   const input = [
     '............',
     '........0...',
@@ -69,19 +67,9 @@ test('Test input part 1', () => {
     '........A...',
     '.........A..',
     '............',
-    '............',
+    '............'
   ]
 
-  expect(pt1(input)).toBe(0)
+  expect(pt2(input)).toBe(34)
 })
-*/
-/*
-test('Test input part 2', () => {
-  const input = [
-    '',
-  ]
-
-  expect(pt2(input)).toBe(0)
-})
-*/
 
