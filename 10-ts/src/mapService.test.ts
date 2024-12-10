@@ -55,11 +55,32 @@ test('Test part 1', () => {
   expect(pt1(input)).toBe(36)
 })
 
-test('Test input part 2', () => {
+test('Test part 2', () => {
   const input = [
-    '',
+    '89010123',
+    '78121874',
+    '87430965',
+    '96549874',
+    '45678903',
+    '32019012',
+    '01329801',
+    '10456732',
   ]
 
-  expect(pt2(input)).toBe(0)
+  expect(pt2(input)).toBe(81)
+})
+
+test('Test multiple paths part 2', () => {
+  const input = [
+    '.....0.',
+    '..4321.',
+    '..5..2.',
+    '..6543.',
+    '..7..4.',
+    '..8765.',
+    '..9....',
+  ]
+
+  expect(pt2(input)).toBe(3)
 })
 
