@@ -1,13 +1,15 @@
 import { readFileSync } from 'fs'
-import {pt1, pt2} from "./src/abService";
+import {pt1, pt2} from "./src/warehouseService";
 
 const readFileLines = (filename: string): string[] =>
-    readFileSync(filename).toString('utf-8').trimEnd().split('\n').map((line: string) => line.trimEnd())
+    readFileSync(filename).toString('utf-8').trimEnd().split('\r\n\r\n')
 
-const inputLines = readFileLines('./src/input.txt')
+const [gridLines, movementLines] = readFileLines('./src/input.txt')
+const inputGrind = gridLines.split('\n').map(l => l.trimEnd());
+const movements = movementLines.split('\n').map(l => l.trimEnd()).join('');
 
-console.log('12.12.2023')
+console.log('15.12.2023')
 const startP1 = Date.now()
-console.log(`Part 1: ${pt1(inputLines)} - Duration: ${Date.now() - startP1}`)
+console.log(`Part 1: ${pt1(inputGrind, movements)} - Duration: ${Date.now() - startP1}`)
 const startP2 = Date.now()
-console.log(`Part 2: ${pt2(inputLines)} - Duration: ${Date.now() - startP2}`)
+console.log(`Part 2: ${pt2(inputGrind, movements)} - Duration: ${Date.now() - startP2}`)
