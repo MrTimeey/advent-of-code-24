@@ -1,6 +1,7 @@
 import { expect, test } from 'vitest'
 import { pt1, pt2 } from './warehouseService'
 
+
 test('Test input part 1', () => {
   const gridInput = [
     '########',
@@ -18,10 +19,16 @@ test('Test input part 1', () => {
 })
 
 test('Test input part 2', () => {
-  const input = [
-    '',
+  const gridInput = [
+      '#######',
+      '#...#.#',
+      '#.....#',
+      '#..OO@#',
+      '#..O..#',
+      '#.....#',
+      '#######',
   ]
-
-  expect(pt2(input)).toBe(0)
+  const movements = '<vv<<^^<<^^'
+  expect(pt2(gridInput, movements)).toBe(0) // Not given - Just for example
 })
 

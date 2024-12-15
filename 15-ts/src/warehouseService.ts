@@ -1,5 +1,3 @@
-import {vi} from "vitest";
-
 const directions = {
   '^': [-1, 0],
   'v': [1, 0],
@@ -28,7 +26,6 @@ const move = (grid: string[][], movement: number[]) => {
     nextChar = grid[x][y]
     visited.push([x,y, nextChar])
     if (nextChar === '.') {
-      console.log('Found free spot', visited)
       for (let i = 0; i < visited.length; i++) {
         const [vX, vY] = visited[i]
         if (i === 0) {
@@ -40,7 +37,6 @@ const move = (grid: string[][], movement: number[]) => {
       break
     }
     if (nextChar === '#') {
-      console.log('Nothing to do!')
       break
     }
   }
@@ -54,18 +50,57 @@ const getDirection = (input: string): number[] => {
   return directions['^']
 }
 
+const count = (grid: string[][]) => {
+  let total = 0
+  for (let row = 0; row < grid.length; row++) {
+    for (let col = 0; col < grid[0].length; col++) {
+      const element = grid[row][col]
+      if (element === 'O') {
+        total += 100 * row + col
+      }
+    }
+  }
+  return total;
+};
 export const pt1 = (inputGrid: string[], movementInput: string): number => {
   const grid = inputGrid.map(line => [...line])
   const movements = [...movementInput]
   for (const movement of movements) {
     move(grid, getDirection(movement))
-    console.log(`After ${movement}`)
-    printGrid(grid)
+    //console.log(`After ${movement}`)
+    //printGrid(grid)
   }
-  return 0
+  return count(grid)
 }
 
-export const pt2 = (inputGrid: string[], movements: string): number => {
+const expandGrid = (inputGrid: string[][]) => {
+  const grid = []
+  for (let row = 0; row < inputGrid.length; row++) {
+    let rowArray = []
+    for (let col = 0; col < inputGrid[0].length; col++) {
+      const element = inputGrid[row][col]
+      if (element === '#') {
+        rowArray.push('#', '#')
+      }
+      if (element === 'O') {
+        rowArray.push('[',']')
+      }
+      if (element === '.') {
+        rowArray.push('.', '.')
+      }
+      if (element === '@') {
+        rowArray.push('@', '.')
+      }
+    }
+    grid.push([...rowArray])
+    rowArray = []
+  }
+  return grid
+};
+export const pt2 = (inputGrid: string[], movementInput: string): number => {
+  const grid = expandGrid(inputGrid.map(line => [...line]))
+  const movements = [...movementInput]
+  printGrid(grid)
   return 0
 }
 
