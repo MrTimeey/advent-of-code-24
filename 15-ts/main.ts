@@ -9,7 +9,6 @@ const readFileLines = (filename: string): string[] => {
 
 const [gridLines, movementLines] = readFileLines('./src/input.txt')
 const inputGrind = gridLines.split('\n').map(l => l.trimEnd());
-console.log(inputGrind)
 const movements = movementLines.split('\n').map(l => l.trimEnd()).join('');
 
 console.log('15.12.2023')
