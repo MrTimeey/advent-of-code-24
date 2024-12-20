@@ -1,4 +1,4 @@
-export const pt1 = (inputLines: string[]): number => {
+export const pt1 = (inputLines: string[], saveAtLeast: number): number => {
   return 0
 }
 

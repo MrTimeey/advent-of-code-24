@@ -1,19 +1,23 @@
 import { expect, test } from 'vitest'
 import { pt1, pt2 } from './designService'
 
-test('Test input part 1', () => {
-  const input = [
-    '',
-  ]
+const templates = 'r, wr, b, g, bwu, rb, gb, br'.split(', ')
+const towels = [
+  'brwrr',
+  'bggr',
+  'gbbr',
+  'rrbgbr',
+  'ubwu',
+  'bwurrg',
+  'brgr',
+  'bbrgwb',
+]
 
-  expect(pt1(input)).toBe(0)
+test('Test input part 1', () => {
+  expect(pt1(templates, towels)).toBe(0)
 })
 
 test('Test input part 2', () => {
-  const input = [
-    '',
-  ]
-
-  expect(pt2(input)).toBe(0)
+  expect(pt2(templates, towels)).toBe(0)
 })
 
