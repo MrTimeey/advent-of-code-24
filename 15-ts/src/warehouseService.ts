@@ -97,9 +97,28 @@ const expandGrid = (inputGrid: string[][]) => {
   }
   return grid
 };
+
+const expandedMove = (grid: string[][], movement: number[]) => {
+  let [x,y] = findStartingPoint(grid)
+  const [dX, dY] = movement
+  const places = []
+  let currentChars = ['@']
+  while (!currentChars.includes('.') && !currentChars.includes('#')) {
+    if (movement === directions['^'] || movement === directions['v']) {
+
+    } else {
+      
+    }
+  }
+}
+
 export const pt2 = (inputGrid: string[], movementInput: string): number => {
   const grid = expandGrid(inputGrid.map(line => [...line]))
   const movements = [...movementInput]
+  console.log('Initial')
+  printGrid(grid)
+  console.log('After <:')
+  expandedMove(grid, directions['<'])
   printGrid(grid)
   return 0
 }
