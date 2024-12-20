@@ -1,11 +1,13 @@
 import { readFileSync } from 'fs'
 import { pt1, pt2 } from './src/pageService.js'
 
-const readFile = (filename) => readFileSync(filename)
-    .toString('utf-8')
-    .trimEnd()
-    .split('\r\n\r\n')
-    .map(arr => arr.split('\n').map(line => line.trimEnd()))
+const readFile = (filename) => {
+    const input = readFileSync(filename)
+        .toString('utf-8')
+        .trimEnd();
+    const parsed = input.includes('\r\n\r\n') ? input.split('\r\n\r\n') : input.split('\n\n')
+    return parsed.map(arr => arr.split('\n').map(line => line.trimEnd()))
+}
 
 const [rules, pages] = readFile('./src/input.txt')
 

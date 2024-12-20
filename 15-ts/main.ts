@@ -1,8 +1,11 @@
 import { readFileSync } from 'fs'
 import {pt1, pt2} from "./src/warehouseService";
 
-const readFileLines = (filename: string): string[] =>
-    readFileSync(filename).toString('utf-8').trimEnd().split('\r\n\r\n')
+const readFileLines = (filename: string): string[] => {
+    const input = readFileSync(filename).toString('utf-8').trimEnd();
+    return input.includes('\r\n\r\n')? input.split('\r\n\r\n') : input.split('\n\n')
+}
+
 
 const [gridLines, movementLines] = readFileLines('./src/input.txt')
 const inputGrind = gridLines.split('\n').map(l => l.trimEnd());
